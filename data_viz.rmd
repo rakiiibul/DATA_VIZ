@@ -21,21 +21,21 @@ summary(soybean_use)
 ### We are going to drop the code column.
 
 ```{r}
-soybean_use1 <-select(soybean_use,-c(0))
+soybean_use1 <-select(soybean_use,-c("code"))
 soybean_use1
 
 ```
 
 ### We are going to calculate the toatl use of soybean.
 ```{r}
-soybean_use %>%
+soybean_use1 %>%
 mutate(total=human_food+animal_feed+processed)
 
 ```
 
 
 ```{r}
-soybean_use%>%
+soybean_use1%>%
    filter(entity%in%c("Bangladesh","Luxembourg","Germany","France"))%>%
 ggplot(aes(x=year,y=human_food,fill=entity,color=entity)) + 
   geom_line() +  
