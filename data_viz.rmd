@@ -1,0 +1,45 @@
+---
+title: "DATA VISUALIZATION"
+author: "Raikibul Hasan"
+date: "2021-12-10"
+output: html_document
+---
+Package Installation
+
+```{r}
+
+library(tidyverse)
+```
+
+### Here is a data set of soybean. The data set is about Soybean production and use by year and country.
+
+```{r}
+soybean_use <-read_delim("data/soybean_use.csv")
+summary(soybean_use)
+```
+
+### We are going to drop the code column.
+
+```{r}
+soybean_use1 <-select(soybean_use,-c(0))
+soybean_use1
+
+```
+
+### We are going to calculate the toatl use of soybean.
+```{r}
+soybean_use %>%
+mutate(total=human_food+animal_feed+processed)
+
+```
+
+
+```{r}
+soybean_use%>%
+   filter(entity%in%c("Bangladesh","Luxembourg","Germany","France"))%>%
+ggplot(aes(x=year,y=human_food,fill=entity,color=entity)) + 
+  geom_line() +  
+  labs(title="Year Vs Soybean uses for human food", subtitle=" 4 different countries(Bangladesh,Luxembourg,Germany,France)", y="Soybean uses for human food ", x="year")
+```
+
+
