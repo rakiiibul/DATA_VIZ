@@ -5,7 +5,7 @@ date: "2021-12-10"
 output: html_document
 ---
 Package Installation
-
+knitr::opts_chunk$set(echo = TRUE, fig.width = 15, fig.height = 5)
 ```{r}
 
 library(tidyverse)
@@ -41,5 +41,62 @@ ggplot(aes(x=year,y=human_food,fill=entity,color=entity)) +
   geom_line() +  
   labs(title="Year Vs Soybean uses for human food", subtitle=" 4 different countries(Bangladesh,Luxembourg,Germany,France)", y="Soybean uses for human food ", x="year")
 ```
+
+
+https://www.kaggle.com/unsdsn/world-happiness?select=2019.csv
+
+https://www.kaggle.com/goyalshalini93/car-data?select=CarPrice_Assignment.csv
+```{r}
+car <-read_delim("data/Used_Car_Price_Data.csv")
+car
+```
+```{r}
+car <-read_delim("data/CarPrice_Assignment.csv")
+
+```
+```{r}
+car_data<-car %>%
+mutate(brand_name=word(CarName, 1))
+```
+
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+ggplot(car_data)+
+aes(x = carlength,
+y = carwidth,
+colour = carbody) +
+geom_point(aes(shape=carbody),size=2,alpha=0.7) +  
+geom_smooth(method = "lm",formula='y~x',se=FALSE)+ scale_colour_viridis_d()+
+labs(x= "Bill length (mm)" ,y="Body mass (g)",
+     caption="Horst AM, Hill AP, Garman KB (2020)",
+     title="Penguin bill length and body mass",
+     subtitle = "Dimensions for male/female Adelie,Chinstrap and Gentoo Penguins at Plamer Station LTER")+
+theme(plot.caption = element_text(face = "italic"))
+
+```
+
+
+```{r}
+
+car_data %>%
+  ggplot()+
+      geom_col(aes(x=brand_name, y=price,fill=brand_name))+
+             scale_y_continuous()+
+  labs(x="Years",y="Area in hectares")
+```
+
+
+
+
+
+
 
 
