@@ -4,6 +4,12 @@ author: "Raikibul Hasan"
 date: "2021-12-10"
 output: html_document
 ---
+
+#Contents
+
+-1. [Data overview]
+
+
 Package Installation
 knitr::opts_chunk$set(echo = TRUE, fig.width = 15, fig.height = 5)
 ```{r}
@@ -76,7 +82,8 @@ car_s<-car_data %>%
 
 
 ```{r}
-ggplot(car_data)+
+car_data%>%
+ggplot()+
 aes(x = carlength,
 y = carwidth,
 colour = carbody) +
@@ -141,6 +148,83 @@ ggplot(aes(x =price ,
 fill = carbody,
 color = carbody)) +
 geom_density(alpha = 0.7)
+```
+
+```{r}
+car_s%>%
+ggplot(aes(x = horsepower, y = highwaympg)) + 
+  geom_point(size = 2) + 
+  geom_smooth(method = lm, color = 'red4',formula = y~x) + 
+  labs(title = 'Relationship between Horsepower and Miles per gallon in cities') + 
+  xlab('Horsepower') + 
+  ylab('Miles per Gallon') +
+  theme_bw() 
+```
+```{r}
+car_s%>%
+ggplot()+
+aes(x = horsepower,
+y = citympg,
+colour = fueltype) +
+geom_point(aes(shape=fueltype),size=3,alpha=0.7) +  
+geom_smooth(method = "lm",formula='y~x',se=FALSE)+ scale_colour_viridis_d()+
+labs(x= "Car length (mm)" ,y="Car Width",
+     caption="Two different fueltype (GAS & Diesel)",
+     title="Car Length VS Car Width ",
+     subtitle = "Dimensions for five different car body(Convertible,hardtop,hatchback,sedan,wagon)")+
+theme(plot.caption = element_text(face = "italic"))
+```
+
+```{r}
+
+count(car_s, aspiration) %>%
+ggplot() +
+geom_col(aes(x = aspiration, y = n,fill=aspiration))
+ 
+
+```
+
+
+```{r}
+library(forcats)
+car_s %>%
+ggplot(aes(y = fct_infreq(cylindernumber),fill=cylindernumber)) +
+geom_bar() +
+
+scale_x_continuous(expand = c(0, NA)) +
+labs(title = "Palmer penguins species",
+y = NULL) +
+theme_minimal(14) +
+# nice trick from T. Pedersen
+theme(panel.ontop = TRUE,
+# better to hide the horizontal grid lines
+panel.grid.major.y = element_blank())
+
+```
+
+```{r}
+ggplot(car_s) +
+geom_bar(aes(y = fuelsystem, fill = drivewheel)) +
+facet_grid(fct_lump_min(fuelsystem, 4) ~ .,
+space = "free", scales = "free_y") +
+labs(y = NULL)
+
+```
+```{r}
+car_s %>%
+# define aes here for both geometries
+ggplot(aes(y = highwaympg,
+x = drivewheel,
+fill = fueltype,
+# for violin contours and dots
+colour = fueltype
+)) + # very transparent filling
+geom_violin(alpha = 0.1, trim = FALSE) +
+geom_point(position = position_jitterdodge(),
+alpha = 0.5,
+# don't need dots in legend
+show.legend = FALSE)
+
 ```
 
 
