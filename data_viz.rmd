@@ -5,10 +5,126 @@ date: "2021-12-10"
 output: html_document
 ---
 
-#Contents
 
--1. [Data overview]
+# Contents
 
+**Click on link for quick view:**
+
+1. [Data overview](#data_overview)
+      -1.1 [Fixing Car Data](#fixing_car)
+      
+
+
+2. [Car Data Visualization](#car_viz)
+
+
+Package Installation
+knitr::opts_chunk$set(echo = TRUE, fig.width = 15, fig.height = 5)
+```{r}
+library(tidyverse)
+```
+#1.Data overview<a name="data_overview"></a>
+
+
+
+
+
+
+
+######The data set contains information of **car ID,symboling,Car Name,fuel type,aspiration,door number,car body,drive wheel,engine location,wheel base,car length,car width,car height,curb weight,engine type,cylinder number,engine size,fuel system,bore ratio,stroke,compression ratio,horse power,peak rpm,city mpg,high waympg,price** There is 205 rows and 26 Columns.The instances here illustrate different car brands such as BMW, Mercedes, Audie etc.
+
+
+
+```{r}
+car <-read_delim("data/CarPrice_Assignment.csv")
+head(car,10)
+```
+
+
+### - 1.1 Fixing car data <a name="fixing_car"></a>
+
+###### - 1.1.1 First of all I've renamed the column **carId** to **brandname** and take the brand name from car name by extracting the first word of the name.
+
+```{r}
+car_data<-car %>%
+  rename(brandname=car_ID)%>%
+  mutate(brandname=word(CarName, 1))
+head(car_data,10)
+```
+###### - 1.1.2 Afterwards I've duplicate listings and cleaned the columns. As example Some brand of car are mixed by captilization and short from of name or spelling error.
+
+
+```{r}
+#Before Cleaning 28 brand name
+count(car_data,brandname)
+car_s<-car_data %>%
+  mutate(brandname = ifelse(as.character(brandname) == "maxda","mazda",as.character(brandname)))%>%
+  mutate(brandname =ifelse(as.character(brandname) == "vokswagen","volkswagen",as.character(brandname)))%>%
+  mutate(brandname =ifelse(as.character(brandname) == "toyouta","toyota",as.character(brandname)))%>%
+  mutate(brandname =ifelse(as.character(brandname) == "Nissan","nissan",as.character(brandname)))%>%
+  mutate(brandname =ifelse(as.character(brandname) == "vw","volkswagen",as.character(brandname)))%>%
+  mutate(brandname =ifelse(as.character(brandname) == "porcshce","porsche",as.character(brandname)))
+
+#After Cleaning 22 brand name
+count(car_s,brandname)
+```
+
+
+#2.Car Data Visualization<a name="car_viz"></a>
+#### 2.1 From graph we can observe that lengthy car has more doors and  wagon bodytypes of car are lenngthy compare to others.
+```{r}
+car_data%>%
+ggplot()+
+aes(x = carwidth,
+y = carlength,
+colour = carbody) +
+geom_point(aes(shape=doornumber),size=3,alpha=0.7) +  
+geom_smooth(method = "lm",formula='y~x',se=FALSE)+ scale_colour_viridis_d()+
+labs(x= "Car width" ,y="Car length",
+     caption="Different Shape represent the car Door Numbers ",
+     title="Car Length VS Car Width ",
+     subtitle = "Dimensions for five different car body(Convertible,hardtop,hatchback,sedan,wagon)")+
+theme(plot.caption = element_text(face = "italic"))
+
+```
+
+#### 2.1 From graph we can observe that there is a positive co-relation between price and weight .
+```{r}
+car_data%>%
+ggplot()+
+aes(x = curbweight,
+y = price) +
+geom_point(aes(shape=carbody,colour=carbody),size=3,alpha=0.7) +  
+geom_smooth(method = "lm",formula='y~x')+ scale_colour_viridis_d()+
+labs(x= "Car weight" ,y="Car Price",
+     title="Weight VS Car price ",
+     subtitle = "Dimensions for five different car body(Convertible,hardtop,hatchback,sedan,wagon)")+
+theme(plot.caption = element_text(face = "italic"))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+###2.1---<a name=""></a>
+#1.---<a name=""></a>
+#1.---<a name=""></a>
+#1.---<a name=""></a>
+#1.---<a name=""></a>
+#1.---<a name=""></a>
+#1.---<a name=""></a>
+
+
+#1.<a ></a>
+#1.<a ></a>
 
 Package Installation
 knitr::opts_chunk$set(echo = TRUE, fig.width = 15, fig.height = 5)
@@ -16,6 +132,10 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 15, fig.height = 5)
 
 library(tidyverse)
 ```
+#rakibul hasan
+jsfsdfksj j  sfklsjflksf sposkfjsdlkfjslkf
+
+###HASAN
 
 ### Here is a data set of soybean. The data set is about Soybean production and use by year and country.
 
@@ -58,7 +178,7 @@ car
 ```
 ```{r}
 car <-read_delim("data/CarPrice_Assignment.csv")
-
+summary(car)
 ```
 ```{r}
 car_data<-car %>%
@@ -137,9 +257,9 @@ car_s %>%
 
 
 ```{r}
-pivot_longer(car_s,brandname : price,names_to = "company",values_to = "totalprice")%>%
-  ggplot(aes(x=price,color=brandname,fill=car_s))+geom_density(alpha=0.4)+labs(x="[ozone]",
-                                                                            title="Garden's densities")+expand_limits(x=c(-5,17))
+#pivot_longer(car_s,brandname : price,names_to = "company",values_to = "totalprice")%>%
+ # ggplot(aes(x=price,color=brandname,fill=car_s))+geom_density(alpha=0.4)+labs(x="[ozone]",
+                                                                            #title="Garden's densities")+expand_limits(x=c(-5,17))
 ```
 
 ```{r}
@@ -226,5 +346,5 @@ alpha = 0.5,
 show.legend = FALSE)
 
 ```
-
+#show this 
 
