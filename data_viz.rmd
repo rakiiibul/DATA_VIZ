@@ -25,6 +25,7 @@ output: html_document
       - 2.9 [Top 5 expensive car company](#cartpc)  
       - 2.10 [Car Engine size density plot](#card)
       - 2.10 [Price density plot based on car body type](#carpl)
+3. [Conclusion](#car_con)  
       
 
 
@@ -491,10 +492,15 @@ theme(plot.caption = element_text(face = "italic"))
 
 <!-- ``` -->
 <!-- #show this  -->
+
+   
+# 3.Conclusion<a name="car_con"></a>  
+### In our Data Visualization course, I have learnt about the Grammar of Graphics,how to use ggplot2 for data visualization ,other package of R to  visualize scatter plots,basic bar charts, histograms, pie charts,violin plots, line plots,  box plots and how to further customize plots using themes.In this workshop, I try to analyse car data using those technique.By this visualization tools we can easily get a clear overview about car properties and performance with a quick view. To conclude, we can say that Data visualization is one of the useful technologies for data scientist.
+
 Data Reference    
 https://www.kaggle.com/goyalshalini93/car-data  
 Image reference link     
 1.https://www.researchgate.net/figure/Cars-dimensions-15_fig10_252035013     
 2.https://www.scienceabc.com/innovation/what-is-a-four-wheel-drive-system-and-how-does-it-work.html     
 
-Thanks to Roland Krause for GGplot2 slide
+### Thanks to Roland Krause for this helpful course
