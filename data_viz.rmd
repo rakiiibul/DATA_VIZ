@@ -13,23 +13,32 @@ output: html_document
 1. [Data overview](#data_overview)
       - 1.1 [Fixing Car Data](#fixing_car)
       
-
-
-2. [Car Data Visualization](#car_viz)
+2. [Car Data Visualization](#car_viz)  
+      - 2.1 [Car Length VS Car Width](#carlw)  
+      - 2.2 [Horsepoer and Car price](#carhp)  
+      - 2.3 [Horsepower VS MPG in highway](#carmh)  
+      - 2.4 [Horsepower VS MPG in city](#carch)  
+      - 2.5 [Drive wheel VS Weight](#cardw)  
+      - 2.6 [Drive wheel VS Weight based on aspiration](#cardwa) 
+      - 2.7 [Number of car per company](#carnb)  
+      - 2.8 [Car average price based on car company](#carpc)  
+      - 2.9 [Top 5 expensive car company](#cartpc)  
+      - 2.10 [Car Engine size density plot](#card)
+      - 2.10 [Price density plot based on car body type](#carpl)
+      
 
 
 ```{r,echo=FALSE,warning=FALSE}
 library(tidyverse)
 ```
+![Car](data/image/Cardata.jpg)
+
+
 # 1.Data overview<a name="data_overview"></a>
+ 
 
 
-
-
-
-
-
-###### The data set contains information of **car ID,symboling,Car Name,fuel type,aspiration,door number,car body,drive wheel,engine location,wheel base,car length,car width,car height,curb weight,engine type,cylinder number,engine size,fuel system,bore ratio,stroke,compression ratio,horse power,peak rpm,city mpg,high waympg,price** There is 205 rows and 26 Columns.The instances here illustrate different car brands such as BMW, Mercedes, Audie etc.
+##### The data set contains information of **car ID,symboling,Car Name,fuel type,aspiration,door number,car body,drive wheel,engine location,wheel base,car length,car width,car height,curb weight,engine type,cylinder number,engine size,fuel system,bore ratio,stroke,compression ratio,horse power,peak rpm,city mpg,high waympg,price** There is 205 rows and 26 Columns.The instances here illustrate different car brands such as BMW, Mercedes, Audie etc.
 
 
 
@@ -41,7 +50,7 @@ head(car,10)
 
 ### 1.1 Fixing car data <a name="fixing_car"></a>
 
-###### 1.1.1 First of all I've renamed the column **carId** to **brandname** and take the brand name from car name by extracting the first word of the name.
+##### 1.1.1 First of all I've renamed the column **carId** to **brandname** and take the brand name from car name by extracting the first word of the name.
 
 ```{r,echo=FALSE}
 car_data<-car %>%
@@ -49,7 +58,7 @@ car_data<-car %>%
   mutate(brandname=word(CarName, 1))
 head(car_data,10)
 ```
-######  1.1.2 Afterwards I've duplicate listings and cleaned the columns. As example Some brand name of car are mixed by captilization and short from of name or spelling error.Like in row 10, maxda->mazda
+#####  1.1.2 Afterwards I've duplicate listings and cleaned the columns. As example Some brand name of car are mixed by captilization and short from of name or spelling error.Like in row 10, maxda->mazda
 
 
 ```{r,echo=FALSE}
@@ -71,7 +80,9 @@ count(car_s,brandname)
 
 
 # 2.Car Data Visualization<a name="car_viz"></a>
-#### 2.1 From graph we can observe that lengthy car has more doors and  wagon bodytypes of car are lengthy compare to others.
+![Car Dimension](data/image/Cars.jpg)     
+
+### 2.1 From graph we can observe that lengthy car has more doors and  wagon bodytypes of car are lengthy compare to others.<a name="carlw"></a>
 ```{r,echo=FALSE}
 car_data%>%
 ggplot()+
@@ -88,7 +99,8 @@ theme(plot.caption = element_text(face = "italic"))
 
 ```
 
-#### 2.2 This visualization represnts that there is a positive co-relation between price and horsepower .
+
+### 2.2 This visualization represnts that there is a positive co-relation between price and horsepower.<a name="carhp"></a>
 ```{r,echo=FALSE}
 car_data%>%
 ggplot()+
@@ -106,10 +118,10 @@ theme(plot.caption = element_text(face = "italic"))
 
 
 
-### 2.3 we can observe that which car has lower horsepower that has higher millage per gallon another ovservation is front-wheel drive cars get better mileage.
+### 2.3 we can observe that which car has lower horsepower that has higher millage per gallon another ovservation is front-wheel drive cars get better mileage.<a name="carmh"></a>
 
 
-```{r, warning=FALSE}
+```{r, warning=FALSE,echo=FALSE}
 car_s %>%
 ggplot(aes(y = highwaympg,
 x = horsepower,
@@ -125,7 +137,7 @@ labs(x= "Horse Power" ,y="Miles per Gallon in Highway",
 theme(plot.caption = element_text(face = "italic"))
 ```
 
-### 2.4 For city it illustrates same thing as before.
+### 2.4 For city it illustrates same thing as before.<a name="carch"></a>
 ```{r, warning=FALSE,echo=FALSE}
 car_s %>%
 ggplot(aes(y = citympg,
@@ -141,8 +153,10 @@ labs(x= "Horse Power" ,y="Miles per Gallon in Cities Road",
      subtitle = "Dimensions for three different car wheel (rwd,fwd,4wd)")+
 theme(plot.caption = element_text(face = "italic"))
 ```
+![Car Transmission system](data/image/drivewheel.jpg)
 
-### 2.5 In previos graph we see that front-wheel drive cars get better mileage.From this graph we try to find out the reason why front-wheel drive car has better milage and this visualization represents that most of the time, front-wheel drive cars weight is less than that of a rear-wheel or 4wd car.
+    
+### 2.5 In previos graph we see that front-wheel drive cars get better mileage.From this graph we try to find out the reason why front-wheel drive car has better milage and this visualization represents that most of the time, front-wheel drive cars weight is less than that of a rear-wheel or 4wd car.<a name="cardw"></a>
 
 ```{r,echo=FALSE}
 car_s %>%
@@ -159,7 +173,7 @@ theme(plot.caption = element_text(face = "italic"))
 ```
 
 
-### 2.6 Visulization of box plot presents that turbocharger engine are heavier hence those car are more heavier.
+### 2.6 Visulization of box plot presents that turbocharger engine are heavier hence those car are more heavier.<a name="cardwa"></a>
 
 
 ```{r,echo=FALSE}
@@ -176,8 +190,9 @@ labs(x= "Drive Wheel" ,y="Car weight",
      subtitle = "Based on aspiration")+
 theme(plot.caption = element_text(face = "italic"))
 ```
-
-### 2.7 Number of car per company in this dataset also provide information about the fuel type of car.
+  
+   
+### 2.7 Number of car per company in this dataset also provide information about the fuel type of car.<a name="carnb"></a>
 
 
 ```{r,echo=FALSE}
@@ -196,6 +211,8 @@ theme(plot.caption = element_text(face = "italic"))
 
 ```
 
+    
+### 2.8 Car average price based on car company.<a name="carpc"></a>
 
 ```{r,echo=FALSE}
 car_s %>%
@@ -207,10 +224,13 @@ ggplot()+
   theme_minimal(15) +
 theme(panel.ontop = TRUE,
 panel.grid.major.y = element_blank())+
-  labs(x="Car Brand Name/Car Company Name",y="Car Price")
+  labs(y="Car Brand Name/Car Company Name",x="Car Price",
+       title="Car Average price based on company ")+
+theme(plot.caption = element_text(face = "italic"))
 ```
 
-
+   
+### 2.9 Top 5 expensive car company from the previous visualization.<a name="cartpc"></a>
 
 ```{r,echo=FALSE}
 car_s %>%
@@ -223,11 +243,14 @@ car_s %>%
   ggplot()+
       geom_col(aes(x=carcompany, y=Avgprice,fill=brandname))+
   scale_y_continuous()+
-  labs(x="Car Company Name",y="Price")
+    labs(x="Car Brand Name/Car Company Name",y="Car Price",
+       title="Top 5 expensive car company with others")+
+theme(plot.caption = element_text(face = "italic"))
 
 ```
-
-
+ 
+ 
+### 2.10 This visualization illustrates that most of the time light engine located in fronal of the car.<a name="card"></a>
 ```{r,echo=FALSE}
 car_s %>%
 ggplot(aes(x = enginesize,
@@ -240,225 +263,238 @@ colour = enginelocation))+
 theme(plot.caption = element_text(face = "italic"))
 ```
 
-
-
-
-
-
-
-###2.1---<a name=""></a>
-#1.---<a name=""></a>
-#1.---<a name=""></a>
-#1.---<a name=""></a>
-#1.---<a name=""></a>
-#1.---<a name=""></a>
-#1.---<a name=""></a>
-
-
-#1.<a ></a>
-#1.<a ></a>
-
-Package Installation
-knitr::opts_chunk$set(echo = TRUE, fig.width = 15, fig.height = 5)
-```{r}
-
-library(tidyverse)
-```
-#rakibul hasan
-jsfsdfksj j  sfklsjflksf sposkfjsdlkfjslkf
-
-###HASAN
-
-### Here is a data set of soybean. The data set is about Soybean production and use by year and country.
-
-```{r}
-soybean_use <-read_delim("data/soybean_use.csv")
-summary(soybean_use)
-```
-
-### We are going to drop the code column.
-
-```{r}
-soybean_use1 <-select(soybean_use,-c("code"))
-soybean_use1
-
-```
-
-### We are going to calculate the toatl use of soybean.
-```{r}
-soybean_use1 %>%
-mutate(total=human_food+animal_feed+processed)
-
-```
-
-
-```{r}
-soybean_use1%>%
-   filter(entity%in%c("Bangladesh","Luxembourg","Germany","France"))%>%
-ggplot(aes(x=year,y=human_food,fill=entity,color=entity)) + 
-  geom_line() +  
-  labs(title="Year Vs Soybean uses for human food", subtitle=" 4 different countries(Bangladesh,Luxembourg,Germany,France)", y="Soybean uses for human food ", x="year")
-```
-
-
-https://www.kaggle.com/unsdsn/world-happiness?select=2019.csv
-
-https://www.kaggle.com/goyalshalini93/car-data?select=CarPrice_Assignment.csv
-```{r}
-car <-read_delim("data/Used_Car_Price_Data.csv")
-car
-```
-```{r}
-car <-read_delim("data/CarPrice_Assignment.csv")
-summary(car)
-```
-```{r}
-car_data<-car %>%
-  rename(brandname=car_ID)%>%
-  mutate(brandname=word(CarName, 1))
-```
-
-
-
-
-```{r}
-car_s<-car_data %>%
-  mutate(brandname = ifelse(as.character(brandname) == "maxda","mazda",as.character(brandname)))%>%
-  mutate(brandname =ifelse(as.character(brandname) == "vokswagen","volkswagen",as.character(brandname)))%>%
-  mutate(brandname =ifelse(as.character(brandname) == "toyouta","toyota",as.character(brandname)))%>%
-  mutate(brandname =ifelse(as.character(brandname) == "Nissan","nissan",as.character(brandname)))%>%
-  mutate(brandname =ifelse(as.character(brandname) == "vw","volkswagen",as.character(brandname)))%>%
-  mutate(brandname =ifelse(as.character(brandname) == "porcshce","porsche",as.character(brandname)))
-```
-
-
-
-```{r}
-car_data%>%
-ggplot()+
-aes(x = carlength,
-y = carwidth,
-colour = carbody) +
-geom_point(aes(shape=fueltype),size=3,alpha=0.7) +  
-geom_smooth(method = "lm",formula='y~x',se=FALSE)+ scale_colour_viridis_d()+
-labs(x= "Car length (mm)" ,y="Car Width",
-     caption="Two different fueltype (GAS & Diesel)",
-     title="Car Length VS Car Width ",
-     subtitle = "Dimensions for five different car body(Convertible,hardtop,hatchback,sedan,wagon)")+
-theme(plot.caption = element_text(face = "italic"))
-
-```
-```{r}
-car_s
-```
-
-
-
-```{r}
-
-
-
-
-
-
-```
-
-```{r}
-
-car_s %>%
-  ggplot()+
-      geom_col(aes(x=brandname, y=price,fill=brandname))+
-             scale_y_continuous()+
-  labs(x="Car Brand Name/Car Company Name",y="Car Price")
-```
-
-
-
-
-
-```{r}
-#pivot_longer(car_s,brandname : price,names_to = "company",values_to = "totalprice")%>%
- # ggplot(aes(x=price,color=brandname,fill=car_s))+geom_density(alpha=0.4)+labs(x="[ozone]",
-                                                                            #title="Garden's densities")+expand_limits(x=c(-5,17))
-```
-
-```{r}
+  
+### 2.11 This visualization illustrates that most of the time light engine located in fronal of the car.<a name="carpl"></a>
+```{r,echo=FALSE}
 car_s %>%
 ggplot(aes(x =price ,
 fill = carbody,
 color = carbody)) +
-geom_density(alpha = 0.7)
-```
-
-```{r}
-car_s%>%
-ggplot(aes(x = horsepower, y = highwaympg)) + 
-  geom_point(size = 2) + 
-  geom_smooth(method = lm, color = 'red4',formula = y~x) + 
-  labs(title = 'Relationship between Horsepower and Miles per gallon in cities') + 
-  xlab('Horsepower') + 
-  ylab('Miles per Gallon') +
-  theme_bw() 
-```
-```{r}
-car_s%>%
-ggplot()+
-aes(x = horsepower,
-y = citympg,
-colour = fueltype) +
-geom_point(aes(shape=fueltype),size=3,alpha=0.7) +  
-geom_smooth(method = "lm",formula='y~x',se=FALSE)+ scale_colour_viridis_d()+
-labs(x= "Car length (mm)" ,y="Car Width",
-     caption="Two different fueltype (GAS & Diesel)",
-     title="Car Length VS Car Width ",
-     subtitle = "Dimensions for five different car body(Convertible,hardtop,hatchback,sedan,wagon)")+
+geom_density(alpha = 0.7)+
+  labs(x= "Price" ,
+     title="Price density plot based on car body type ",
+     subtitle = "Dimension for Carbody")+
 theme(plot.caption = element_text(face = "italic"))
 ```
 
 
+<!-- ###2.1--- -->
+<!-- #1.---<a name=""></a> -->
+<!-- #1.---<a name=""></a> -->
+<!-- #1.---<a name=""></a> -->
+<!-- #1.---<a name=""></a> -->
+<!-- #1.---<a name=""></a> -->
+<!-- #1.---<a name=""></a> -->
+
+
+<!-- #1.<a ></a> -->
+<!-- #1.<a ></a> -->
+
+<!-- Package Installation -->
+<!-- knitr::opts_chunk$set(echo = TRUE, fig.width = 15, fig.height = 5) -->
+<!-- ```{r} -->
+
+<!-- library(tidyverse) -->
+<!-- ``` -->
+<!-- #rakibul hasan -->
+<!-- jsfsdfksj j  sfklsjflksf sposkfjsdlkfjslkf -->
+
+<!-- ###HASAN -->
+
+<!-- ### Here is a data set of soybean. The data set is about Soybean production and use by year and country. -->
+
+<!-- ```{r} -->
+<!-- soybean_use <-read_delim("data/soybean_use.csv") -->
+<!-- summary(soybean_use) -->
+<!-- ``` -->
+
+<!-- ### We are going to drop the code column. -->
+
+<!-- ```{r} -->
+<!-- soybean_use1 <-select(soybean_use,-c("code")) -->
+<!-- soybean_use1 -->
+
+<!-- ``` -->
+
+<!-- ### We are going to calculate the toatl use of soybean. -->
+<!-- ```{r} -->
+<!-- soybean_use1 %>% -->
+<!-- mutate(total=human_food+animal_feed+processed) -->
+
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- soybean_use1%>% -->
+<!--    filter(entity%in%c("Bangladesh","Luxembourg","Germany","France"))%>% -->
+<!-- ggplot(aes(x=year,y=human_food,fill=entity,color=entity)) +  -->
+<!--   geom_line() +   -->
+<!--   labs(title="Year Vs Soybean uses for human food", subtitle=" 4 different countries(Bangladesh,Luxembourg,Germany,France)", y="Soybean uses for human food ", x="year") -->
+<!-- ``` -->
 
 
 
-```{r}
-
-count(car_s, brandname) %>%
-ggplot() +
-geom_col(aes(x = brandname, y = n,fill=brandname))
-
- 
-
-```
-
-
-
-```{r}
-ggplot(car_s) +
-geom_bar(aes(y = fuelsystem, fill = drivewheel)) +
-facet_grid(fct_lump_min(fuelsystem, 4) ~ .,
-space = "free", scales = "free_y") +
-labs(y = NULL)
-
-```
+<!-- https://www.kaggle.com/goyalshalini93/car-data?select=CarPrice_Assignment.csv -->
+<!-- ```{r} -->
+<!-- car <-read_delim("data/Used_Car_Price_Data.csv") -->
+<!-- car -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- car <-read_delim("data/CarPrice_Assignment.csv") -->
+<!-- summary(car) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- car_data<-car %>% -->
+<!--   rename(brandname=car_ID)%>% -->
+<!--   mutate(brandname=word(CarName, 1)) -->
+<!-- ``` -->
 
 
-A four-wheel drive system can be understood as a combination of the FWD system and the RWD system acting in tandem, which enables the engine to connect to and send power to all four wheels.
 
-```{r, warning=FALSE}
-car_s %>%
-# define aes here for both geometries
-ggplot(aes(y = highwaympg,
-x = horsepower,
-fill = drivewheel,
-# for violin contours and dots
-colour = drivewheel
-)) + # very transparent filling
-geom_violin(alpha = 0.1, trim = FALSE) +
-geom_point(position = position_jitterdodge(),
-alpha = 0.5,
-# don't need dots in legend
-show.legend = TRUE)
 
-```
-#show this 
+<!-- ```{r} -->
+<!-- car_s<-car_data %>% -->
+<!--   mutate(brandname = ifelse(as.character(brandname) == "maxda","mazda",as.character(brandname)))%>% -->
+<!--   mutate(brandname =ifelse(as.character(brandname) == "vokswagen","volkswagen",as.character(brandname)))%>% -->
+<!--   mutate(brandname =ifelse(as.character(brandname) == "toyouta","toyota",as.character(brandname)))%>% -->
+<!--   mutate(brandname =ifelse(as.character(brandname) == "Nissan","nissan",as.character(brandname)))%>% -->
+<!--   mutate(brandname =ifelse(as.character(brandname) == "vw","volkswagen",as.character(brandname)))%>% -->
+<!--   mutate(brandname =ifelse(as.character(brandname) == "porcshce","porsche",as.character(brandname))) -->
+<!-- ``` -->
 
-https://www.scienceabc.com/innovation/what-is-a-four-wheel-drive-system-and-how-does-it-work.html
+
+
+<!-- ```{r} -->
+<!-- car_data%>% -->
+<!-- ggplot()+ -->
+<!-- aes(x = carlength, -->
+<!-- y = carwidth, -->
+<!-- colour = carbody) + -->
+<!-- geom_point(aes(shape=fueltype),size=3,alpha=0.7) +   -->
+<!-- geom_smooth(method = "lm",formula='y~x',se=FALSE)+ scale_colour_viridis_d()+ -->
+<!-- labs(x= "Car length (mm)" ,y="Car Width", -->
+<!--      caption="Two different fueltype (GAS & Diesel)", -->
+<!--      title="Car Length VS Car Width ", -->
+<!--      subtitle = "Dimensions for five different car body(Convertible,hardtop,hatchback,sedan,wagon)")+ -->
+<!-- theme(plot.caption = element_text(face = "italic")) -->
+
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- car_s -->
+<!-- ``` -->
+
+
+
+<!-- ```{r} -->
+
+
+
+
+
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- car_s %>% -->
+<!--   ggplot()+ -->
+<!--       geom_col(aes(x=brandname, y=price,fill=brandname))+ -->
+<!--              scale_y_continuous()+ -->
+<!--   labs(x="Car Brand Name/Car Company Name",y="Car Price") -->
+<!-- ``` -->
+
+
+
+
+
+<!-- ```{r} -->
+<!-- #pivot_longer(car_s,brandname : price,names_to = "company",values_to = "totalprice")%>% -->
+<!--  # ggplot(aes(x=price,color=brandname,fill=car_s))+geom_density(alpha=0.4)+labs(x="[ozone]", -->
+<!--                                                                             #title="Garden's densities")+expand_limits(x=c(-5,17)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- car_s %>% -->
+<!-- ggplot(aes(x =price , -->
+<!-- fill = carbody, -->
+<!-- color = carbody)) + -->
+<!-- geom_density(alpha = 0.7) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- car_s%>% -->
+<!-- ggplot(aes(x = horsepower, y = highwaympg)) +  -->
+<!--   geom_point(size = 2) +  -->
+<!--   geom_smooth(method = lm, color = 'red4',formula = y~x) +  -->
+<!--   labs(title = 'Relationship between Horsepower and Miles per gallon in cities') +  -->
+<!--   xlab('Horsepower') +  -->
+<!--   ylab('Miles per Gallon') + -->
+<!--   theme_bw()  -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- car_s%>% -->
+<!-- ggplot()+ -->
+<!-- aes(x = horsepower, -->
+<!-- y = citympg, -->
+<!-- colour = fueltype) + -->
+<!-- geom_point(aes(shape=fueltype),size=3,alpha=0.7) +   -->
+<!-- geom_smooth(method = "lm",formula='y~x',se=FALSE)+ scale_colour_viridis_d()+ -->
+<!-- labs(x= "Car length (mm)" ,y="Car Width", -->
+<!--      caption="Two different fueltype (GAS & Diesel)", -->
+<!--      title="Car Length VS Car Width ", -->
+<!--      subtitle = "Dimensions for five different car body(Convertible,hardtop,hatchback,sedan,wagon)")+ -->
+<!-- theme(plot.caption = element_text(face = "italic")) -->
+<!-- ``` -->
+
+
+
+
+
+<!-- ```{r} -->
+
+<!-- count(car_s, brandname) %>% -->
+<!-- ggplot() + -->
+<!-- geom_col(aes(x = brandname, y = n,fill=brandname)) -->
+
+
+
+<!-- ``` -->
+
+
+
+<!-- ```{r} -->
+<!-- ggplot(car_s) + -->
+<!-- geom_bar(aes(y = fuelsystem, fill = drivewheel)) + -->
+<!-- facet_grid(fct_lump_min(fuelsystem, 4) ~ ., -->
+<!-- space = "free", scales = "free_y") + -->
+<!-- labs(y = NULL) -->
+
+<!-- ``` -->
+
+
+<!-- A four-wheel drive system can be understood as a combination of the FWD system and the RWD system acting in tandem, which enables the engine to connect to and send power to all four wheels. -->
+
+<!-- ```{r, warning=FALSE} -->
+<!-- car_s %>% -->
+<!-- # define aes here for both geometries -->
+<!-- ggplot(aes(y = highwaympg, -->
+<!-- x = horsepower, -->
+<!-- fill = drivewheel, -->
+<!-- # for violin contours and dots -->
+<!-- colour = drivewheel -->
+<!-- )) + # very transparent filling -->
+<!-- geom_violin(alpha = 0.1, trim = FALSE) + -->
+<!-- geom_point(position = position_jitterdodge(), -->
+<!-- alpha = 0.5, -->
+<!-- # don't need dots in legend -->
+<!-- show.legend = TRUE) -->
+
+<!-- ``` -->
+<!-- #show this  -->
+Data Reference    
+https://www.kaggle.com/goyalshalini93/car-data  
+Image reference link     
+1.https://www.researchgate.net/figure/Cars-dimensions-15_fig10_252035013     
+2.https://www.scienceabc.com/innovation/what-is-a-four-wheel-drive-system-and-how-does-it-work.html     
+
+Thanks to Roland Krause for GGplot2 slide
