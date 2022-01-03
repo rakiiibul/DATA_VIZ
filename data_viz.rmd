@@ -265,7 +265,7 @@ theme(plot.caption = element_text(face = "italic"))
 ```
 
   
-### 2.11 This visualization illustrates that most of the time light engine located in fronal of the car.<a name="carpl"></a>
+### 2.11 This visualization is about price density plot based on car body type.<a name="carpl"></a>
 ```{r,echo=FALSE}
 car_s %>%
 ggplot(aes(x =price ,
