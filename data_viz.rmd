@@ -27,7 +27,7 @@ output: html_document
       - 2.10 [Price density plot based on car body type](#carpl)
 3. [Conclusion](#car_con)  
       
-
+> Nice TOC
 
 ```{r,echo=FALSE,warning=FALSE}
 library(tidyverse)
@@ -79,9 +79,11 @@ message("After Cleaning  we have 22 brand name")
 count(car_s,brandname)
 ```
 
+> I'm counting this as a table - 
 
 # 2.Car Data Visualization<a name="car_viz"></a>
 ![Car Dimension](data/image/Cars.jpg)     
+
 
 ### 2.1 From graph we can observe that lengthy car has more doors and  wagon bodytypes of car are lengthy compare to others.<a name="carlw"></a>
 ```{r,echo=FALSE}
@@ -159,6 +161,8 @@ theme(plot.caption = element_text(face = "italic"))
     
 ### 2.5 In previos graph we see that front-wheel drive cars get better mileage.From this graph we try to find out the reason why front-wheel drive car has better milage and this visualization represents that most of the time, front-wheel drive cars weight is less than that of a rear-wheel or 4wd car.<a name="cardw"></a>
 
+> I would recommend shorter headings, here something like "Mileage by drive" and the rest of the heading as actual text
+
 ```{r,echo=FALSE}
 car_s %>%
 ggplot(aes(x = drivewheel,y=curbweight,
@@ -191,7 +195,8 @@ labs(x= "Drive Wheel" ,y="Car weight",
      subtitle = "Based on aspiration")+
 theme(plot.caption = element_text(face = "italic"))
 ```
-  
+
+> Not quite sure why you include boxplots when you're using the (better imho) violin plots above. But again useful illustration.
    
 ### 2.7 Number of car per company in this dataset also provide information about the fuel type of car.<a name="carnb"></a>
 
@@ -230,6 +235,7 @@ panel.grid.major.y = element_blank())+
 theme(plot.caption = element_text(face = "italic"))
 ```
 
+> Here the legend is redundant and takes away space, so should be removed.
    
 ### 2.9 Top 5 expensive car company from the previous visualization.<a name="cartpc"></a>
 
@@ -503,4 +509,10 @@ Image reference link
 1.https://www.researchgate.net/figure/Cars-dimensions-15_fig10_252035013     
 2.https://www.scienceabc.com/innovation/what-is-a-four-wheel-drive-system-and-how-does-it-work.html     
 
+> Good to include the links to the references and absolutely OK for an assignement but in professional context also check the license (possibily not even OK on the page you referencing this from) and be careful. 
+
+> Great README with install instructions, very nice. 
+
 ### Thanks to Roland Krause for this helpful course
+
+> Thanks for the nice contribution. The only really weak point is that it's about cars, not bicycles. 
